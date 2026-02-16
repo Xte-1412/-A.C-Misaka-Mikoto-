@@ -1,5 +1,3 @@
----
-
 ```markdown
 # ⚡ -A.C-Misaka-Mikoto- ⚡
 > ### *“My Lovely Bot – The Ultimate Railgun for Your Discord Productivity & Music Experience.”*
