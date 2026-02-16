@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    /* 1. Project Structure (PENTING BIAR RAPI) */
+    "rootDir": "./src",        // Sumber kode lu ada di folder src
+    "outDir": "./dist",        // Hasil compile (JS) bakal masuk ke dist
+
+    /* 2. Module System */
+    "target": "ES2022",        // Kita pake Node.js baru, jadi fitur baru aman
+    "module": "commonjs",      // Paling stabil buat Node.js backend/bot
+    "moduleResolution": "node",
+    "esModuleInterop": true,   // Biar bisa import library lama (CommonJS) pake syntax 'import'
+    
+    /* 3. Strictness (Sesuai default lu, ini bagus!) */
+    "strict": true,
+    "noUncheckedIndexedAccess": true, // Safety tambahan buat array
+    "skipLibCheck": true,             // Skip cek type di node_modules (biar cepet)
+    "forceConsistentCasingInFileNames": true,
+
+    /* 4. Development Help */
+    "sourceMap": true,        // Biar enak debugging (nunjuk ke TS bukan JS)
+    "resolveJsonModule": true // Biar bisa import file .json langsung
+  },
+  "include": ["src/**/*"],    // Cuma compile file di dalam src
+  "exclude": ["node_modules"] // Jangan compile node_modules
+}

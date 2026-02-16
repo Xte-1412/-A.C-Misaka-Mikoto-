@@ -1,0 +1,33 @@
+server: # REST and WS server
+  port: 2333
+  address: 0.0.0.0
+  
+lavalink:
+  plugins:
+    # --- BAGIAN PENTING: Kita download plugin YouTube v1.17.0 ---
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.17.0"
+      snapshot: false
+  server:
+    password: "youshallnotpass"
+    sources:
+      # --- BAGIAN PENTING: Matikan youtube bawaan ---
+      youtube: false 
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+
+# Config buat Plugin yang kita download di atas
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    # Rotasi client biar gak gampang ke-detect bot
+    clients: ["MUSIC", "ANDROID_VR", "WEB"]
