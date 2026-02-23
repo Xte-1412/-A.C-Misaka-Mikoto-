@@ -2,10 +2,10 @@ import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../interfaces/Command';
 import { QueueManager } from '../../services/QueueManager';
 
-const StopCommand: Command = {
+const ByeCommand: Command = {
     data: new SlashCommandBuilder()
-        .setName('stop')
-        .setDescription('Hentikan musik, hapus antrian, dan masuk mode Standby'),
+        .setName('bye')
+        .setDescription('Keluarkan bot dari Voice Channel'),
 
     execute: async (client, interaction) => {
         const member = interaction.guild?.members.cache.get(interaction.user.id);
@@ -18,29 +18,29 @@ const StopCommand: Command = {
 
         const player = client.shoukaku.players.get(interaction.guildId!);
         if (!player) {
-            await interaction.reply({ content: '❌ Bot lagi gak nyetel lagu kok.', ephemeral: true });
+            await interaction.reply({ content: '❌ Bot emang gak ada di VC kok.', ephemeral: true });
             return;
         }
 
         const botVoiceChannelId = interaction.guild?.members.me?.voice.channelId;
         if (voiceChannel.id !== botVoiceChannelId) {
-            await interaction.reply({ content: '❌ Lu harus satu VC sama bot buat stop!', ephemeral: true });
+            await interaction.reply({ content: '❌ Lu harus satu VC sama bot buat ngusir!', ephemeral: true });
             return;
         }
 
         try {
-            // Bersihkan antrian agar event 'end' tidak memicu lagu berikutnya
+            // Bersihkan memori antrian
             QueueManager.clearQueue(interaction.guildId!);
             
-            // Hentikan musik yang sedang jalan (Ini memicu masuk ke mode standby)
-            await player.stopTrack();
+            // Putuskan koneksi bot dari Discord VC
+            await client.shoukaku.leaveVoiceChannel(interaction.guildId!);
             
-            await interaction.reply('🛑 **Musik dihentikan & Antrian dihapus.** Bot sekarang dalam mode **Standby 🟢**.');
+            await interaction.reply('👋 **Dadah!** Bot telah keluar dari Voice Channel.');
         } catch (error) {
             console.error(error);
-            await interaction.reply({ content: '❌ Gagal menghentikan musik.', ephemeral: true });
+            await interaction.reply({ content: '❌ Gagal mengeluarkan bot.', ephemeral: true });
         }
     }
 };
 
-export default StopCommand;
+export default ByeCommand;

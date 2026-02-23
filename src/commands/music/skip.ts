@@ -4,7 +4,7 @@ import { Command } from '../../interfaces/Command';
 const SkipCommand: Command = {
     data: new SlashCommandBuilder()
         .setName('skip')
-        .setDescription('Skip lagu yang lagi main'),
+        .setDescription('Skip lagu yang lagi main (Lanjut ke antrian)'),
 
     execute: async (client, interaction) => {
         const member = interaction.guild?.members.cache.get(interaction.user.id);
@@ -24,8 +24,9 @@ const SkipCommand: Command = {
         }
 
         try {
+            // Ini akan memicu event 'end' secara otomatis untuk memutar antrian
             await player.stopTrack();
-            await interaction.reply('⏭️ **Lagu di-skip!**');
+            await interaction.reply('⏭️ **Lagu di-skip!** Memutar lagu selanjutnya (jika ada di antrian)...');
         } catch (error) {
             console.error(error);
             await interaction.reply({ content: '❌ Gagal skip lagu.', ephemeral: true });
